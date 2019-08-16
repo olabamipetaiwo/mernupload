@@ -1,10 +1,13 @@
-var express = require('express');
+const express = require('express');
+const connectDB = require("./config/db");
 
-var userRouter = require('./routes/api/user');
-var authRouter = require('./routes/api/auth');
-var contactRouter = require('./routes/api/contact');
+const userRouter = require('./api/routes/user');
+const authRouter = require('./api/routes/auth');
+const contactRouter = require('./api/routes/contact');
 
-var app = express();
+connectDB();
+
+const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -13,10 +16,10 @@ app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/contact', contactRouter);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log("Server Runnning");
+  console.log("Server Runnning efficiently");
 })
 
 module.exports = app;

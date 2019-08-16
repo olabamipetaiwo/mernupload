@@ -4,21 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "client": "npm start --prefix client",
+    "clientinstall": "npm install --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Olabamipe taiwo",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+    "concurrently": "^4.1.1",  
+    "config": "^3.2.2",
+    "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "express-validator": "^6.1.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.6.5",
+    "mongoose": "^5.6.9",
     "morgan": "^1.9.1",
-    "config":"*",
-    "express-validator":"*"
+    "nodemailer": "^6.3.0"
   },
   "devDependencies": {
     "dotenv": "^8.0.0"
