@@ -6,7 +6,7 @@ import {
     ADD_CONTACT
 } from  '../types';
 
-const ContactState = (props) => {
+const AuthState = (props) => {
 
     const initialState = {
        
