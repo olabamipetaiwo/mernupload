@@ -1,7 +1,22 @@
-import React,{Fragment} from 'react';
-import PropTypes  from 'prop-types'
+import React,{Fragment,useContext} from 'react';
+import PropTypes  from 'prop-types';
+import ContactContext from '../../context/contact/contactContext';
 
-const contactItemComponent = ({contact}) => {
+
+const ContactItemComponent = ({contact}) => {
+    const contactContext = useContext(ContactContext);
+    const {deleteContact,editContact,setCurrent} = contactContext;
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+        deleteContact(id);
+    };
+
+    const handleEdit = (e) => {
+        e.preventDefault();
+        setCurrent(id);
+    };
+
     const {id,name,email,type } = contact;
 
     return (
@@ -11,16 +26,16 @@ const contactItemComponent = ({contact}) => {
                         <td>{ type.charAt(0).toUpperCase() + type.slice(1) }</td>
                         <td>{email}</td>
                         <td>
-                            <button class="btn btn-success btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <button onClick={handleEdit}  className="btn btn-success btn-sm">Edit</button>
+                            <button onClick={handleDelete} className="btn btn-danger btn-sm">Delete</button>
                         </td>
                     </tr>
         </Fragment>
     )
 }
 
-contactItemComponent.propTypes = {
+ContactItemComponent.propTypes = {
   contact:PropTypes.object.isRequired
 };
 
-export default contactItemComponent
+export default ContactItemComponent;

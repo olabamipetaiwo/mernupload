@@ -1,5 +1,5 @@
 import React,{Fragment,useContext} from 'react';
-import { Link }  from 'react-router-dom';
+// import { Link }  from 'react-router-dom';
 import ContactItem from './contactItemComponent';
 
 import ContactContext from '../../context/contact/contactContext';
@@ -10,7 +10,7 @@ const Contacts =() => {
 
   return (
     <Fragment>
-          <table class="table table-striped">
+          <table className="table table-striped">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -21,7 +21,7 @@ const Contacts =() => {
                 </thead>
                 <tbody>
                 {contacts.map( (contact,index) => {
-                    return  <ContactItem contact={contact} />
+                    return  <ContactItem key={index} contact={contact} />
                  }
                 )}
                 </tbody>

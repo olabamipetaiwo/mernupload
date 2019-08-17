@@ -1,5 +1,6 @@
 import React,{Fragment} from 'react';
-import Contact from "../contacts/contactsComponent";
+import Contacts from "../contacts/contactsComponent";
+import ContactForm from "../contacts/contactFormComponent";
 // import { Link }  from 'react-router-dom';
 
 
@@ -8,10 +9,10 @@ const Home =() => {
     <Fragment>
        <div className="row">
          <div className="col-sm-9">
-             <Contact />
+             <Contacts />
          </div>
          <div className="col-sm-3">
-            {/* form */}
+            <ContactForm />
          </div>
          
        </div>
