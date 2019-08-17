@@ -1,9 +1,10 @@
 import React,{useContext,useState,useEffect} from 'react';
 import ContactContext from '../../context/contact/contactContext';
+import { UPDATE_CONTACT } from '../../context/types';
 
 const ContactForm = () => {
     const contactContext = useContext(ContactContext);
-    const {addContact,currentContact,currentSet} = contactContext;
+    const {addContact,currentContact,currentSet,clearCurrent,updateContact} = contactContext;
 
     const [contact,setContact] = useState({
         id:'',
@@ -40,7 +41,29 @@ const ContactForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addContact(contact);
+        if (currentSet) {
+            //update
+            updateContact(contact);
+            setContact({
+                name:'',
+                email:'',
+                phone:'',
+                type:''
+            });
+        }else {
+            //add
+            addContact(contact);
+            setContact({
+                name:'',
+                email:'',
+                phone:'',
+                type:''
+            });
+        }
+    };
+
+    const clearForm =(e) => {
+        e.preventDefault();
         setContact({
             name:'',
             email:'',
@@ -49,14 +72,11 @@ const ContactForm = () => {
         });
     };
 
-    const clearForm =() => {
-        setContact({
-            name:'',
-            email:'',
-            phone:'',
-            type:''
-        });
-    }
+    const clearAll = (e) => {
+        e.preventDefault();
+        clearCurrent();
+        console.log("Contact Cleared");
+    };
 
     return (
         <div className="row">
@@ -116,16 +136,22 @@ const ContactForm = () => {
                        checked={type === 'professional'} /> {' '} 
                        Professional
                 <div className="form-group">
-                    <button type="submit" className="btn btn-success">
+                    <button type="submit" className= {currentSet ? 'btn btn-info' : 'btn btn-success'}>
                        {currentSet ? 'Update Contact' : 'Add Contact'}
                     </button>
 
-                    <button onClick={clearForm} type="submit" className="btn btn-danger">
+                    <div className="row">
+                     <button onClick={clearForm}  className="btn btn-danger">
                         Clear
                     </button>
-                </div>
-               
+
+                    <button onClick={clearAll}  className="btn btn-danger">
+                        Clear All
+                    </button>
+                  </div> 
+                </div>               
             </form>
+           
         </div>
     )
 }

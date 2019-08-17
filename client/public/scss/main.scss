@@ -19,3 +19,22 @@ h1,h2,h3,h4,h5,h6 {
 button {
     margin-right:.4rem;
 }
+.filter {
+    width:100;
+}
+
+
+.item-enter {
+    opacity: 0;
+  }
+  .item-enter-active {
+    opacity: 1;
+    transition: opacity 100ms ease-in;
+  }
+  .item-exit {
+    opacity: 1;
+  }
+  .item-exit-active {
+    opacity: 0;
+    transition: opacity 100ms ease-in;
+  }
