@@ -46,7 +46,7 @@ export default(state,action) => {
             return {
                 ...state,
                 contacts : state.contacts.filter((contact) => {
-                    return contact.id !== action.payload
+                    return contact._id !== action.payload
                 })
         }
         case UPDATE_CONTACT:

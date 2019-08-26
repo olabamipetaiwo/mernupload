@@ -82,8 +82,21 @@ router.patch('/:contact', authMiddleware , [
   
 });
 
-router.delete('/', async (req, res) => {
-  res.json('contact route working');
+router.delete('/:contact', async (req, res) => {
+  let contactId = req.params.contact;
+ try {
+    await Contact.findByIdAndRemove(contactId);
+    res.status(200).json({
+      msg:"Contact Deleted",
+      contact:contactId
+    });
+ }catch(err) {
+  res.status(500).json({
+    msg:"Server Error",
+    err:err.message
+ }); 
+}
 });
 
 module.exports = router;
+

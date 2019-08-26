@@ -88,11 +88,21 @@ const ContactState = (props) => {
     };
 
     //Delete Contact
-    const deleteContact = (contactId) => {  
-        dispatch({
-            type:DELETE_CONTACT,
-            payload:contactId
-        });
+    const deleteContact =async (id) => { 
+        try {
+            const res = await Axios.delete("http://localhost:5000/api/contact/"+id);
+            dispatch({
+                type:DELETE_CONTACT,
+                payload:res.data.contact
+            });
+           }catch(err) {
+               console.log("delete contaact failed");
+               console.log("respinse",err.response);
+                dispatch({
+                    type:CONTACT_FAIL,
+                    payload:err
+                });
+           }      
     };
 
 
