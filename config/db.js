@@ -3,7 +3,7 @@ const config = require("config");
 //const config =require("./config");
 // const localDb = config.localMongoURI;
 // const db = config.mongoURI;
- const localDb = config.get("localMongoURI");
+// const localDb = config.get("localMongoURI");
  const db = config.get("mongoURI");
 
 const connectDB = async () => {
