@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
 
-const salt =  bcrypt.genSalt(10);
 
-const userSchema = Schema({
+const UserSchema = Schema({
     name: {
         type:String,
         required:true
@@ -24,16 +23,16 @@ const userSchema = Schema({
     }
 });
 
-userSchema.methods.encryptPassword = (password) => {
-    return bcrypt.hash(password,salt);
-};
+// userSchema.methods.encryptPassword = (password) => {
+//     return bcrypt.hash(password,salt);
+// };
 
-userSchema.methods.validatePassword = (password,encryptedPassword) => {
-    return bcrypt.compare(password,encryptedPassword);
-};
-
-
+// userSchema.methods.validatePassword = (password,encryptedPassword) => {
+//     return bcrypt.compare(password,encryptedPassword);
+// };
 
 
-module.exports = mongoose.model('user', userSchema);
+
+
+module.exports = mongoose.model('user', UserSchema);
 

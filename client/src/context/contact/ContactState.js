@@ -1,9 +1,14 @@
 import React, {useReducer} from 'react';
 import ContactContext from './contactContext';
 import ContactReducer from './contactReducer';
+import Axios from 'axios';
+import setAuthToken from '../../utils/setAuthToken';
 
 import {
+    LOAD_CONTACTS,
+    CLEAR_CONTACTS,
     ADD_CONTACT,
+    CONTACT_FAIL,
     DELETE_CONTACT,
     SET_CURRENT,
     CLEAR_CURRENT,
@@ -14,29 +19,7 @@ import {
 
 const ContactState = (props) => {
     const initialState = {
-        contacts: [
-            {
-                id:1,
-                name:"olabamipe Taiwo",
-                email:"teeola48@gmail.com",
-                phone:"08134562390",
-                type:"Personal"
-            },
-            {
-                id:2,
-                name:"olabamipe kenny",
-                email:"keola48@gmail.com",
-                phone:"08152394540",
-                type:"Personal"
-            },
-            {
-                id:3,
-                name:"Zach Olaimolu",
-                email:"futanet48@gmail.com",
-                phone:"08089456230",
-                type:"Personal"
-            }
-        ],
+        contacts:[],
         currentContact:{
             id:'',
             name:'',
@@ -46,18 +29,62 @@ const ContactState = (props) => {
         },
        // currentContact:{},
         currentSet:false,
-        filtered:null
+        filtered:null,
+        contactError:null,
+        contactErrorFlag:false
     };
 
     const [state,dispatch] = useReducer(ContactReducer,initialState);
 
+    //Load COntacts
+    const loadContacts = async (userId) => {
+        if(localStorage.token) {
+            setAuthToken(localStorage.token);
+        }
+
+       try {
+        const res = await Axios.get("http://localhost:5000/api/contact/"+userId); 
+        dispatch({
+            type:LOAD_CONTACTS,
+            payload:res.data.contacts
+        });
+       }catch(err) {
+           console.log("get contaact failed");
+           console.log("respinse",err.response);
+            dispatch({
+                type:CONTACT_FAIL,
+                payload:err
+            });
+       } 
+    }
+
+    //Clear Contacts
+    const clearContacts = () => {
+        dispatch({
+            type:CLEAR_CONTACTS
+        })
+    }
+
     //Add Contacts
-    const addContact = (contact) => {
-        contact.id = Math.random();  
+    const addContact = async (contact) => {
+        if(localStorage.token) {
+            setAuthToken(localStorage.token);
+        }
+
+       try {
+        const res = await Axios.post('http://localhost:5000/api/contact',contact);
         dispatch({
             type:ADD_CONTACT,
-            payload:contact
+            payload:res.data.contact
         });
+       }catch(err) {
+           console.log("add contaact failed");
+           console.log("respinse",err.response);
+            dispatch({
+                type:CONTACT_FAIL,
+                payload:err.response.data.msg
+            });
+       }   
     };
 
     //Delete Contact
@@ -87,11 +114,26 @@ const ContactState = (props) => {
 
 
     //Update Contact
-    const updateContact = (contact) => {
+    const updateContact = async (id,contact) => {
+        if(localStorage.token) {
+            setAuthToken(localStorage.token);
+        }
+       
+       try {
+        const res = await Axios.patch("http://localhost:5000/api/contact/"+id,contact); 
+        console.log(id," identifies: ", res.data.contact)
         dispatch({
             type:UPDATE_CONTACT,
-            payload:contact
+            payload:res.data.contact
         });
+       }catch(err) {
+           console.log("update contaact failed");
+           console.log("respinse",err.response);
+            dispatch({
+                type:CONTACT_FAIL,
+                payload:err
+            });
+       }
     }
 
     //Filter Contacts
@@ -117,13 +159,17 @@ const ContactState = (props) => {
                 currentContact:state.currentContact,
                 currentSet:state.currentSet,
                 filtered:state.filtered,
+                contactError:state.contactError,
+                contactErrorFlag:state.contactErrorFlag,
                 addContact:addContact,
                 deleteContact:deleteContact,
                 setCurrent:setCurrent,
                 clearCurrent:clearCurrent,
                 updateContact:updateContact,
                 filterContacts:filterContacts,
-                clearFilter:clearFilter
+                clearFilter:clearFilter,
+                loadContacts:loadContacts,
+                clearContacts:clearContacts
             }}>
             {props.children}
         </ContactContext.Provider>

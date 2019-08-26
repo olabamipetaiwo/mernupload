@@ -6,18 +6,19 @@ import ContactContext from '../../context/contact/contactContext';
 const ContactItemComponent = ({contact}) => {
     const contactContext = useContext(ContactContext);
     const {deleteContact,editContact,setCurrent} = contactContext;
+    const {_id,name,email,type } = contact;
 
     const handleDelete = (e) => {
         e.preventDefault();
-        deleteContact(id);
+        deleteContact(_id);
     };
 
     const handleEdit = (e) => {
         e.preventDefault();
-        setCurrent(id);
+        setCurrent(_id);
     };
 
-    const {id,name,email,type } = contact;
+    
 
     return (
         <Fragment>

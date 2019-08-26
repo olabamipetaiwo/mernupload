@@ -7,7 +7,7 @@ const ContactForm = () => {
     const {addContact,currentContact,currentSet,clearCurrent,updateContact} = contactContext;
 
     const [contact,setContact] = useState({
-        id:'',
+        _id:'',
         name:'',
         email:'',
         phone:'',
@@ -19,7 +19,7 @@ const ContactForm = () => {
             setContact(currentContact[0]);
         }else {
             setContact({
-                id:'',
+                _id:'',
                 name:'',
                 email:'',
                 phone:'',
@@ -30,7 +30,7 @@ const ContactForm = () => {
 
    
 
-    const {name,email,phone,type} = contact;
+    const {_id,name,email,phone,type} = contact;
 
     const onChange = (e) =>  {
         setContact({
@@ -43,7 +43,7 @@ const ContactForm = () => {
         e.preventDefault();
         if (currentSet) {
             //update
-            updateContact(contact);
+            updateContact(_id,contact);
             setContact({
                 name:'',
                 email:'',

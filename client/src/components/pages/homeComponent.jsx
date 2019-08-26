@@ -1,22 +1,55 @@
-import React,{Fragment} from 'react';
+import React,{Fragment,useContext,useEffect} from 'react';
 import Contacts from "../contacts/contactsComponent";
 import ContactForm from "../contacts/contactFormComponent";
-// import { Link }  from 'react-router-dom';
-
+import AuthContext from '../../context/auth/authContext';
+import ContactContext from '../../context/contact/contactContext';
 
 const Home =() => {
-  return (
-    <Fragment>
-       <div className="row">
-         <div className="col-sm-9">
-             <Contacts />
-         </div>
-         <div className="col-sm-3">
+  const authContext = useContext(AuthContext);
+  const contactContext = useContext(ContactContext);
+  const {token,isAuthenticated,loadUser,user,loading} = authContext;
+  const {contacts,loadContacts} = contactContext;
+  let loggedUserId = localStorage.getItem('user');
+
+ 
+   useEffect(() => {  
+     loadUser();
+  },[]);
+
+  useEffect(() => {
+     loadContacts(loggedUserId)
+  },[]);
+
+  const mainDiv = (
+      <Fragment>
+        <div className="row">
+          <div className="col-sm-9">
+              <Contacts />
+          </div>
+          <div className="col-sm-3">
             <ContactForm />
-         </div>
-         
-       </div>
+          </div>
+          
+        </div>
     </Fragment>
+  );
+
+  const prepDiv =(
+      <Fragment>
+        <div className="row">
+          <div className="col-sm-6">
+         
+            <ContactForm />
+          </div>   
+        </div>
+    </Fragment>
+  );
+
+  return (
+    <div>
+         <h2>Welcome {(user != null) ? user.email : 'WebsiteUser'}</h2>
+         { (user != null) ? mainDiv : prepDiv}
+    </div>
   );
 }
 

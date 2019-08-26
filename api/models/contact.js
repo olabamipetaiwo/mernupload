@@ -19,6 +19,10 @@ const contactSchema = Schema({
         type:String,
         default:"Personal"
     },
+    phone: {
+        type:String,
+        default:"XXX-XXX-XXX"
+    },
     date: {
         type:Date,
         default:Date.now

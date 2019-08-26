@@ -20,6 +20,10 @@ button {
   margin-right: .4rem;
 }
 
+.mt2 {
+  margin-top: 2rem;
+}
+
 .filter {
   width: 100;
 }
