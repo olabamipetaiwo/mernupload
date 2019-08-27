@@ -3,18 +3,20 @@ const config = require("config");
 //const config =require("./config");
 // const localDb = config.localMongoURI;
 // const db = config.mongoURI;
-// const localDb = config.get("localMongoURI");
+const localDb = config.get("localMongoURI");
  const db = config.get("mongoURI");
 
 const connectDB = async () => {
     try {
-        //await mongoose.connect(localDb, {
+       //await mongoose.connect(localDb, {
          await mongoose.connect(db, {
             useNewUrlParser:true,
             useCreateIndex:true,
             useFindAndModify:false
         });
-        console.log("``Connected to database"+db+"succesfully");
+
+
+        console.log("``Connected to database"+db+" with mongoclient succesfully");
     }catch(err) {
         console.log(err);
         console.log("Error occured connecting to Database");
@@ -23,4 +25,6 @@ const connectDB = async () => {
 };
 
 module.exports= connectDB;
+
+
 

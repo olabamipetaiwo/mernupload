@@ -1,4 +1,4 @@
-import React,{useContext,useState,useEffect} from 'react';
+import React,{Fragment,useContext,useState,useEffect} from 'react';
 import ContactContext from '../../context/contact/contactContext';
 import { UPDATE_CONTACT } from '../../context/types';
 
@@ -79,8 +79,8 @@ const ContactForm = () => {
     };
 
     return (
-        <div className="row">
-            <h4 
+         <Fragment>
+                     <h4 
                 className="text-center">
                 {currentSet ? 'Update Contact' : 'Add Contact'}
             </h4>
@@ -93,7 +93,7 @@ const ContactForm = () => {
                          name="email"
                          className="form-control" 
                          value={email}
-                         onChange={onChange} />
+                         onChange={onChange} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
@@ -102,7 +102,7 @@ const ContactForm = () => {
                         name="name"
                         className="form-control" 
                         value={name}
-                        onChange={onChange} />
+                        onChange={onChange} required/>
                 </div>
 
                 <div className="form-group">
@@ -112,7 +112,7 @@ const ContactForm = () => {
                         name="phone"
                         className="form-control" 
                         value={phone}
-                        onChange={onChange} />
+                        onChange={onChange} required/>
                 </div>
 
                 <h6>Contact Type</h6>
@@ -151,9 +151,8 @@ const ContactForm = () => {
                   </div> 
                 </div>               
             </form>
-           
-        </div>
-    )
+         </Fragment>
+    );
 }
 
 export default ContactForm;

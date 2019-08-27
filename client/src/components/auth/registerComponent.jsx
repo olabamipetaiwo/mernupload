@@ -8,15 +8,19 @@ const Register = (props) => {
 
     const {alerts,setAlert,removeAlert} = alertContext;
     const {registerUser,error,errFlag,clearErrors,isAuthenticated} = authContext;
+    const registerBtn = document.querySelector("#registerBtn");
 
     useEffect(() => {
         if(isAuthenticated) {
             props.history.push('/');
+        }else {
+            if(errFlag) {
+                registerBtn.innerHTML = "Register";
+                setAlert(error,'danger');
+                clearErrors();
+            }
         }
-        if(errFlag) {
-            setAlert(error,'danger');
-            clearErrors();
-        }
+        
         //eslint-disable-next-line
     },[error,isAuthenticated,props.history]);
 
@@ -43,6 +47,7 @@ const Register = (props) => {
         }else if(password != password2) {
             setAlert("password do not match",'danger');
         }else {
+            registerBtn.innerHTML = "Registering User .................";
             registerUser({
                 name,
                 email,
@@ -97,7 +102,7 @@ const Register = (props) => {
                                         value={password2}
                                         onChange={onChange} minLength="6" autoComplete="on" required />
                                 </div>
-                                <button type="submit" className="btn btn-primary btn-block">
+                                <button id="registerBtn" type="submit" className="btn btn-primary btn-block">
                                     Register
                                 </button>
 

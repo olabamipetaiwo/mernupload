@@ -57,7 +57,7 @@ const AuthState = (props) => {
                 type:REGISTER_SUCCESS,
                 payload: res.data
             });
-            //loadUser();
+            loadUser();
         } catch(err) {
             console.log("axios sending  error message");
             dispatch({

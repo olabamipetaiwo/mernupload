@@ -8,13 +8,15 @@ const Login = (props) => {
 
     const {alerts,setAlert,removeAlert} = alertContext;
     const {logIn,error,errFlag,clearErrors,isAuthenticated,loadUser} = authContext;
-
+    const loginBtn = document.querySelector("#loginBtn");
+   // const loadingIcon = document.querySelector(".loading");
 
     useEffect(() => {
         if(isAuthenticated) {
             props.history.push('/');
         }else {
             if(errFlag) {
+                loginBtn.innerHTML = "Login";
                 setAlert(error,'danger');
                 clearErrors();
             }
@@ -39,6 +41,7 @@ const Login = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        loginBtn.innerHTML = "Authenticating Credentials ...............";
         if(email == '' || password == '') {
             setAlert("Please enter all fields",'danger');
         }else {
@@ -73,9 +76,11 @@ const Login = (props) => {
                                     onChange={onChange} minLength="6" required />
                             </div>
 
-                        
-                            <button type="submit" className="btn btn-primary btn-sm">
-                                Login
+                            <button id="loginBtn" type="submit" className="btn btn-primary btn-block">
+                                 {/* <img  class="loginBtn-img" src="img/giphy.gif" alt="Loading ...." /> */}
+                                  Login
+                                  <div className="loading"></div>
+
                             </button>
 
                         </form>

@@ -31,8 +31,6 @@ const ContactsFilterComponent = () => {
 
     return (
         <Fragment>
-            <div className="row">
-                
              <form>
                <div className="form-group">
                     <input 
@@ -44,7 +42,6 @@ const ContactsFilterComponent = () => {
                          onChange={onChange} />
                 </div>
           </form>
-        </div>
         </Fragment>
     )
 }

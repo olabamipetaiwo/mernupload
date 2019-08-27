@@ -1,6 +1,7 @@
 import React,{Fragment,useContext,useEffect} from 'react';
 import Contacts from "../contacts/contactsComponent";
 import ContactForm from "../contacts/contactFormComponent";
+import ContactsFilter from '../contacts/contactsFilterComponent';
 import AuthContext from '../../context/auth/authContext';
 import ContactContext from '../../context/contact/contactContext';
 
@@ -23,7 +24,9 @@ const Home =() => {
   const mainDiv = (
       <Fragment>
         <div className="row">
+        <h2  className="mb2 text-primary text-center">Welcome {(user != null) ? user.email : 'WebsiteUser'}</h2>
           <div className="col-sm-9">
+              <ContactsFilter />
               <Contacts />
           </div>
           <div className="col-sm-3">
@@ -37,6 +40,7 @@ const Home =() => {
   const prepDiv =(
       <Fragment>
         <div className="row">
+        <h2  className="mb2 text-primary text-center">Welcome {(user != null) ? user.email : 'WebsiteUser'}</h2>
           <div className="col-sm-6">
          
             <ContactForm />
@@ -47,7 +51,6 @@ const Home =() => {
 
   return (
     <div>
-         <h2>Welcome {(user != null) ? user.email : 'WebsiteUser'}</h2>
          { (user != null) ? mainDiv : prepDiv}
     </div>
   );

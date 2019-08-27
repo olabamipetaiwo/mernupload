@@ -4,13 +4,14 @@ import ContactItem from './contactItemComponent';
 import {CSSTransition,TransitionGroup} from 'react-transition-group';
 import AuthContext from '../../context/auth/authContext';
 import ContactContext from '../../context/contact/contactContext';
-import ContactsFilter from '../contacts/contactsFilterComponent';
 
 const Contacts =() => {
     const authContext = useContext(AuthContext);
     const {user,token} = authContext;
     const contactContext = useContext(ContactContext);
     const {contacts,filtered} = contactContext;
+    const t = "tee";
+    const d = "dee";
 
 
     if(contacts.length == 0) {
@@ -19,7 +20,6 @@ const Contacts =() => {
       return (
         <Fragment>
           <TransitionGroup> 
-            <ContactsFilter />
               <table className="table table-striped">
                     <thead>
                     <tr>
@@ -30,12 +30,17 @@ const Contacts =() => {
                     </tr>
                     </thead>
                     <tbody>
-                      {
-                      contacts.map((contact,index) => (
-                         <ContactItem key={index} contact={contact} />
-                      ))
+                    {
+                      filtered != null ?
+                        filtered.map((contact,index) => (
+                            <ContactItem key={index} contact={contact} />
+                        )):
+                        contacts.map((contact,index) => (
+                          <ContactItem key={index} contact={contact} />
+                         ))
                     }
                     </tbody>
+                    
                   </table>
                   
                </TransitionGroup>
