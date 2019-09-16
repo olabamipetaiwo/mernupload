@@ -6,7 +6,7 @@ const Register = (props) => {
     const alertContext = useContext(AlertContext);
     const authContext = useContext(AuthContext);
 
-    const {alerts,setAlert,removeAlert} = alertContext;
+    const {setAlert} = alertContext;
     const {registerUser,error,errFlag,clearErrors,isAuthenticated} = authContext;
     const registerBtn = document.querySelector("#registerBtn");
 
@@ -42,6 +42,7 @@ const Register = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        //eslint-disable-next-line
         if(name == '' || email == '' || password == '') {
             setAlert("Please enter all fields",'danger');
         }else if(password != password2) {

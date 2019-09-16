@@ -1,15 +1,13 @@
 const mongoose = require("mongoose");
 const config = require("config");
-//const config =require("./config");
-// const localDb = config.localMongoURI;
-// const db = config.mongoURI;
 const localDb = config.get("localMongoURI");
- const db = config.get("mongoURI");
+
+const db = config.get("mongoURI");
 
 const connectDB = async () => {
     try {
-       //await mongoose.connect(localDb, {
-         await mongoose.connect(db, {
+       await mongoose.connect(localDb, {
+        // await mongoose.connect(db, {
             useNewUrlParser:true,
             useCreateIndex:true,
             useFindAndModify:false

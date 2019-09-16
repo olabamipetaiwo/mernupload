@@ -52,14 +52,12 @@ const AuthState = (props) => {
 
         try {
             const res = await Axios.post('http://localhost:5000/api/user',user);
-            console.log("register user success");
             dispatch({
                 type:REGISTER_SUCCESS,
                 payload: res.data
             });
             loadUser();
         } catch(err) {
-            console.log("axios sending  error message");
             dispatch({
                 type:REGISTER_FAIL,
                 payload:err.response.data.msg

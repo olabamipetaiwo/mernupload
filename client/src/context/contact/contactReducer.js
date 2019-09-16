@@ -8,7 +8,8 @@ import {
     SET_CURRENT,
     CLEAR_CURRENT,
     FILTER_CONTACTS,
-    CLEAR_FILTER
+    CLEAR_FILTER,
+    CLEAR_ERRORS
  } from '../types';
 
  let isEquivalent =require("../../functions/functions")
@@ -90,6 +91,12 @@ export default(state,action) => {
                contactErrorFlag:true, 
                contactError:action.payload
             }
+        case CLEAR_ERRORS:
+            return {
+                   ...state,
+                   contactError:null,
+                   contactErrorFlag:false
+               }
         default:
             return state
     }

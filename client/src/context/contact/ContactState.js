@@ -14,7 +14,8 @@ import {
     CLEAR_CURRENT,
     UPDATE_CONTACT,
     FILTER_CONTACTS,
-    CLEAR_FILTER
+    CLEAR_FILTER,
+    CLEAR_ERRORS
 } from  '../types';
 
 const ContactState = (props) => {
@@ -65,6 +66,21 @@ const ContactState = (props) => {
         })
     }
 
+      //set Current
+      const setCurrent = (contactId) => {
+        dispatch({
+            type:SET_CURRENT,
+            payload:contactId
+        });
+    }
+
+     //clear current
+     const clearCurrent = () => {
+        dispatch({
+            type:CLEAR_CURRENT
+        });
+    }
+
     //Add Contacts
     const addContact = async (contact) => {
         if(localStorage.token) {
@@ -78,14 +94,32 @@ const ContactState = (props) => {
             payload:res.data.contact
         });
        }catch(err) {
-           console.log("add contaact failed");
-           console.log("respinse",err.response);
             dispatch({
                 type:CONTACT_FAIL,
-                payload:err.response.data.msg
+                payload:err.response.data.err
             });
        }   
     };
+
+    //Update Contact
+    const updateContact = async (id,contact) => {
+        if(localStorage.token) {
+            setAuthToken(localStorage.token);
+        }
+       
+       try {
+        const res = await Axios.patch("http://localhost:5000/api/contact/"+id,contact); 
+        dispatch({
+            type:UPDATE_CONTACT,
+            payload:res.data.contact
+        });
+       }catch(err) {
+            dispatch({
+                type:CONTACT_FAIL,
+                payload:err.response.data.err
+            });
+       }
+    }
 
     //Delete Contact
     const deleteContact =async (id) => { 
@@ -104,47 +138,7 @@ const ContactState = (props) => {
                 });
            }      
     };
-
-
-    //set Current
-    const setCurrent = (contactId) => {
-        dispatch({
-            type:SET_CURRENT,
-            payload:contactId
-        });
-    }
-
-     //clear current
-     const clearCurrent = () => {
-        dispatch({
-            type:CLEAR_CURRENT
-        });
-    }
-
-
-
-    //Update Contact
-    const updateContact = async (id,contact) => {
-        if(localStorage.token) {
-            setAuthToken(localStorage.token);
-        }
-       
-       try {
-        const res = await Axios.patch("http://localhost:5000/api/contact/"+id,contact); 
-        console.log(id," identifies: ", res.data.contact)
-        dispatch({
-            type:UPDATE_CONTACT,
-            payload:res.data.contact
-        });
-       }catch(err) {
-           console.log("update contaact failed");
-           console.log("respinse",err.response);
-            dispatch({
-                type:CONTACT_FAIL,
-                payload:err
-            });
-       }
-    }
+    
 
     //Filter Contacts
     const filterContacts = (keyword) => {
@@ -158,6 +152,13 @@ const ContactState = (props) => {
     const clearFilter = () => {
         dispatch({
             type:CLEAR_FILTER
+        });
+    }
+
+    //Clear Errors
+    const clearErrors = () => {
+        dispatch({
+            type:CLEAR_ERRORS
         });
     }
 
@@ -179,7 +180,8 @@ const ContactState = (props) => {
                 filterContacts:filterContacts,
                 clearFilter:clearFilter,
                 loadContacts:loadContacts,
-                clearContacts:clearContacts
+                clearContacts:clearContacts,
+                clearContactErrors:clearErrors
             }}>
             {props.children}
         </ContactContext.Provider>
