@@ -3,9 +3,7 @@ const connectDB = require("./config/db");
 const cors = require("cors");
 const path = require("path")
 
-const userRouter = require('./api/routes/user');
-const authRouter = require('./api/routes/auth');
-const contactRouter = require('./api/routes/contact');
+const uploadRouter = require('./api/routes/upload');
 
 connectDB();
 
@@ -15,9 +13,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
-app.use('/api/user', userRouter);
-app.use('/api/auth', authRouter);
-app.use('/api/contact', contactRouter);
+
+
+app.use('/api/upload', uploadRouter);
 
 //server static assets in production
 if(process.env.NODE_ENV === 'production') {
@@ -29,7 +27,7 @@ if(process.env.NODE_ENV === 'production') {
 const PORT = 5000;
 
 app.listen(PORT, () => {
-  console.log("Server Runnning efficiently");
+  console.log("Server Runnning efficiently on: ",PORT);
 })
 
 module.exports = app;
