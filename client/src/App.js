@@ -11,11 +11,11 @@ const App =() => {
   const [loaded,setLoaded] = useState(0)
 
   const maxSelectFile=(event)=>{
-    let files = event.target.files // create file object
-        if (files.length > 3) { 
+    let files = event.target.files 
+      if (files.length > 3) { 
            const msg = 'Only 3 images can be uploaded at a time'
-           event.target.value = null // discard selected file
-           console.log(msg)
+           event.target.value = null;
+           toast.error(msg);
            return false;
       }
     return true;
@@ -25,15 +25,14 @@ const App =() => {
       let files = event.target.files 
       let err = '';
       const types = ['image/png', 'image/jpeg', 'image/gif']
-      for(var x = 0; x<files.length; x++) {
+      for(var x = 0; x < files.length; x++) {
         if (types.every(type => files[x].type !== type)) { 
           err += files[x].type+' is not a supported format\n';
         }
       };
 
       if (err !== '') {  
-          event.target.value = null 
-          console.log(err)
+          event.target.value = null;
           toast.error(err)
           return false; 
       }
@@ -43,21 +42,20 @@ const App =() => {
   }
 
   const checkFileSize=(event)=>{
-      let files = event.target.files
-      let size = 513000
+      let files = event.target.files;
+      console.log(files[0]);
+      let size = 5188690048550;//Modify thus to restrict file size
       let err = ""; 
-      for(var x = 0; x<files.length; x++) {
-        console.log('File Size', files[x].size)
-      if (files[x].size > size) {
-      err += files[x].type+'is too large, please pick a smaller file\n';
-    }
-  };
-    if (err !== '') {
-        event.target.value = null
-        console.log(err)
-        toast.error(err)
-        return false
-    }
+      for(var x = 0; x < files.length; x++) {
+        if (files[x].size > size) {
+          err += files[x].name+'is too large, please pick a smaller file\n';
+        }
+      };
+      if (err !== '') {
+          event.target.value = null;
+          toast.error(err);
+          return false;
+      }
 
     return true;
   }
@@ -80,11 +78,9 @@ const App =() => {
     // data.append('file',selectedFile);
 
      for(var x = 0; x<selectedFile.length; x++) {
-       console.log(selectedFile[x]);
        data.append('file',selectedFile[x]);
      }
 
-     console.log(data)
     axios.post("http://localhost:5000/api/upload/", data, { 
         // receive two parameter endpoint url ,form data 
         onUploadProgress: ProgressEvent => {
@@ -95,6 +91,8 @@ const App =() => {
         toast.success('upload success')
       })
       .catch(err => { 
+        
+          console.log("error occured",err.message)
           toast.error('upload fail')
       })
   }
@@ -104,7 +102,7 @@ const App =() => {
      <div className="container">
       	<div className="row">
             <div className="col-md-6">
-                <form enctype="multipart/form-data" method="post" action="#" id="#">   
+                <form encType="multipart/form-data" method="post" action="#" id="#">   
                 <div className="form-group">
                     <ToastContainer />
                 </div>
